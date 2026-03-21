@@ -1,18 +1,19 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import Calculator from "./components/pages/Calculator";
+import Results from "./components/pages/Results";
+import Layout from "./components/layout/Layout";
 
-import './App.css'
-import { Button } from '@danalazar/metro-ui'
-
-function App() {
- 
-
+const App = () => {
   return (
-    <div className="text-3xl font-bold underline">
-      <p>some text</p>
-      <Button>
-  Primary Button
-</Button>
-    </div>
-  )
-}
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Calculator />} />
+          <Route path="/rezultate" element={<Results />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-export default App
+export default App;
