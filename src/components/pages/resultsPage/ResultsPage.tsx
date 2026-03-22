@@ -1,4 +1,4 @@
-function Results() {
+function ResultsPage() {
   return (
     <>
       <p>Results</p>
@@ -6,4 +6,4 @@ function Results() {
   );
 }
 
-export default Results;
+export default ResultsPage;
