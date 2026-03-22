@@ -9,14 +9,9 @@ const SaveModalContent = () => {
   const dispatch: AppDispatch = useDispatch();
   const [label, setLabel] = React.useState("");
 
-  const { currentValue, previousValue, operation, result } = useSelector(
+  const { expression, result } = useSelector(
     (state: RootState) => state.calculator,
   );
-
-  const expression =
-    previousValue && operation
-      ? `${previousValue} ${operation} ${currentValue}`
-      : currentValue;
 
   const handleSave = () => {
     if (!label.trim()) return;
