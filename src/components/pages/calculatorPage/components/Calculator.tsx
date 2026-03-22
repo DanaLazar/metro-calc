@@ -1,22 +1,30 @@
 import { Delete, Save } from "lucide-react";
 import { Button } from "@danalazar/metro-ui";
-import { useCalculator } from "../../../hooks/useCalculator";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  inputNumber,
+  chooseOperation,
+  calculate,
+  inputDecimal,
+  backspace,
+} from "../../../../store/calculatorSlice";
+import { openModal } from "../../../../store/modalSlice";
+import type { RootState, AppDispatch } from "../../../../store/store";
+
+type CalculatorButton = {
+  label: string;
+  type: "number" | "operation" | "clear" | "decimal" | "equals" | "backspace";
+  span?: number;
+};
 
 const Calculator = () => {
-  const {
-    display,
-    previousValue,
-    operation,
-    isCalculated,
-    handleNumber,
-    handleOperation,
-    calculate,
-    clear,
-    handleDecimal,
-    handleBackspace,
-  } = useCalculator();
+  const dispatch: AppDispatch = useDispatch();
 
-  const buttons = [
+  const { currentValue, previousValue, operation, isCalculated } = useSelector(
+    (state: RootState) => state.calculator,
+  );
+
+  const buttons: readonly CalculatorButton[] = [
     { label: "C", type: "clear", span: 2 },
     { label: "⌫", type: "backspace" },
     { label: "÷", type: "operation" },
@@ -35,42 +43,51 @@ const Calculator = () => {
     { label: "0", type: "number", span: 2 },
     { label: ".", type: "decimal" },
     { label: "=", type: "equals" },
-  ];
+  ] as const satisfies readonly CalculatorButton[];
 
-  const handleClick = (
-    button:
-      | { label: string; type: string; span: number }
-      | { label: string; type: string; span?: undefined },
-  ) => {
+  const getVariant = (type: CalculatorButton["type"]) => {
+    switch (type) {
+      case "operation":
+        return "primary";
+      case "equals":
+        return "dark";
+      case "clear":
+      case "backspace":
+        return "danger";
+      default:
+        return "secondary";
+    }
+  };
+
+  const handleClick = (button: CalculatorButton) => {
     switch (button.type) {
       case "number":
-        handleNumber(button.label);
+        dispatch(inputNumber(button.label));
         break;
       case "operation":
-        handleOperation(button.label);
+        dispatch(chooseOperation(button.label));
         break;
       case "clear":
-        clear();
+        dispatch(openModal("clear"));
         break;
       case "decimal":
-        handleDecimal();
+        dispatch(inputDecimal());
         break;
       case "equals":
-        calculate();
+        dispatch(calculate());
         break;
       case "backspace":
-        handleBackspace();
+        dispatch(backspace());
         break;
     }
   };
 
-  function handleSave(): void {
-    throw new Error("Function not implemented.");
-  }
+  const handleSave = () => {
+    dispatch(openModal("save"));
+  };
 
   return (
     <>
-      <div className="absolute inset-0 bg-[#00a8e1]/20 blur-xl"></div>
       <div className="relative bg-white shadow-2xl p-8 border border-gray-200">
         {/* Display */}
         <div className="mb-6 p-6 bg-gray-50 border border-gray-200">
@@ -81,48 +98,33 @@ const Calculator = () => {
               </div>
             )}
             <div className="text-4xl font-light text-gray-900 break-all">
-              {display}
+              {currentValue}
             </div>
           </div>
         </div>
 
-        {/* Buttons Grid */}
+        {/* Buttons */}
         <div className="grid grid-cols-4 gap-3">
           {buttons.map((button, index) => (
             <Button
               key={index}
-              variant={
-                button.type === "operation"
-                  ? "primary"
-                  : button.type === "equals"
-                    ? "dark"
-                    : button.type === "clear" || button.type === "backspace"
-                      ? "danger"
-                      : "secondary"
-              }
+              variant={getVariant(button.type)}
               size="md"
               className={`${button.span === 2 ? "col-span-2" : ""} h-16`}
               onClick={() => handleClick(button)}
             >
-              {button.label === "⌫" ? (
-                <Delete className="w-5 h-5" />
-              ) : (
-                button.label
-              )}
+              {button.label === "⌫" ? <Delete /> : button.label}
             </Button>
           ))}
         </div>
 
-        {/* Save Button */}
+        {/* Save */}
         <Button
-          variant="primary"
-          size="md"
-          className="mt-4 w-full flex items-center justify-center"
+          className="mt-4 w-full"
           disabled={!isCalculated}
           onClick={handleSave}
         >
-          <Save className="w-5 h-5 mr-2" />
-          Salvează
+          <Save /> Salvează
         </Button>
       </div>
     </>

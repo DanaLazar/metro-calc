@@ -1,30 +1,25 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { Provider } from "react-redux";
+import { store } from "../../../../store/store";
 import Calculator from "./Calculator";
+import { expect, it } from "vitest";
 
-vi.mock("@danalazar/metro-ui", () => ({
-  Button: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-    <button {...props} />
-  ),
-}));
-describe("Calculator UI", () => {
-  it("Save button is disabled initially", () => {
-    render(<Calculator />);
-    const saveButton = screen.getByRole("button", { name: /salvează/i });
+const renderWithStore = (ui: React.ReactElement) => {
+  return render(<Provider store={store}>{ui}</Provider>);
+};
 
-    expect(saveButton).toBeDisabled();
-  });
+it("Save button is disabled initially", () => {
+  renderWithStore(<Calculator />);
+  expect(screen.getByText(/salvează/i)).toBeDisabled();
+});
 
-  it("Save button becomes enabled after calculation", () => {
-    render(<Calculator />);
+it("Save button becomes enabled after calculation", () => {
+  renderWithStore(<Calculator />);
 
-    fireEvent.click(screen.getByText("2"));
-    fireEvent.click(screen.getByText("+"));
-    fireEvent.click(screen.getByText("3"));
-    fireEvent.click(screen.getByText("="));
+  fireEvent.click(screen.getByText("2"));
+  fireEvent.click(screen.getByText("+"));
+  fireEvent.click(screen.getByText("3"));
+  fireEvent.click(screen.getByText("="));
 
-    const saveButton = screen.getByText("Salvează");
-
-    expect(saveButton).not.toBeDisabled();
-  });
+  expect(screen.getByText(/salvează/i)).not.toBeDisabled();
 });
