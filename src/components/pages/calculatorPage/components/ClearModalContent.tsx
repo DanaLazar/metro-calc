@@ -8,20 +8,24 @@ const ClearModalContent = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const handleClear = () => {
-    dispatch(clearCalculator()); // ✅ șterge
-    dispatch(closeModal()); // ✅ închide modal
+    dispatch(clearCalculator());
+    dispatch(closeModal());
   };
 
   return (
     <>
       <p>Sigur doriți să ștergeți calculatorul?</p>
 
-      <div className="metro-modal-buttons">
-        <Button variant="secondary" onClick={() => dispatch(closeModal())}>
+      <div className="flex justify-between gap-3">
+        <Button
+          variant="secondary"
+          className="flex-1"
+          onClick={() => dispatch(closeModal())}
+        >
           Anulează
         </Button>
 
-        <Button variant="danger" onClick={handleClear}>
+        <Button variant="danger" className="flex-1" onClick={handleClear}>
           Șterge
         </Button>
       </div>

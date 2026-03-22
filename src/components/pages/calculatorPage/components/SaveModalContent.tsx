@@ -41,11 +41,15 @@ const SaveModalContent = () => {
         showButtons={false}
       />
 
-      <div className="metro-modal-buttons">
-        <Button variant="secondary" onClick={() => dispatch(closeModal())}>
+      <div className="flex justify-between gap-3">
+        <Button
+          variant="secondary"
+          onClick={() => dispatch(closeModal())}
+          className="flex-1"
+        >
           Anulează
         </Button>
-        <Button variant="primary" onClick={handleSave}>
+        <Button variant="primary" onClick={handleSave} className="flex-1">
           Salvează
         </Button>
       </div>
