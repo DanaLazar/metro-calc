@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { calculateExpression } from "../utils/calculateExpression";
 
-interface SavedExpression {
+export interface SavedExpression {
   label: string;
   result: string;
 }
@@ -17,7 +17,7 @@ interface CalculatorState {
   history: SavedExpression[];
 }
 
-const initialState: CalculatorState = {
+export const initialCalculatorState: CalculatorState = {
   currentValue: "0",
   previousValue: "",
   operation: "",
@@ -29,7 +29,7 @@ const initialState: CalculatorState = {
 
 const calculatorSlice = createSlice({
   name: "calculator",
-  initialState,
+  initialState: initialCalculatorState,
   reducers: {
     inputNumber: (state, action: PayloadAction<string>) => {
       if (state.isCalculated) {

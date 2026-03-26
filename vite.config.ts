@@ -10,5 +10,14 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
+    // Needed because `@danalazar/metro-ui` injects built CSS assets
+    // (e.g. `dist/assets/spinner.css`) which Vitest otherwise tries to load as ESM.
+    css: true,
+    pool: "vmThreads",
+    server: {
+      deps: {
+        inline: ["@danalazar/metro-ui"],
+      },
+    },
   },
 });

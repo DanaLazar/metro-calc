@@ -1,5 +1,5 @@
 import React from "react";
-import { InputWithAction, Button } from "@danalazar/metro-ui";
+import { Button, Input } from "@danalazar/metro-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../../../store/modalSlice";
 import { saveExpression } from "../../../../store/calculatorSlice";
@@ -29,11 +29,11 @@ const SaveModalContent = () => {
         </strong>
       </div>
 
-      <InputWithAction
+      <Input
+        id="save-modal-input"
         value={label}
         onChange={setLabel}
         placeholder="Introduceți o etichetă..."
-        showButtons={false}
       />
 
       <div className="flex justify-between gap-3">
