@@ -7,7 +7,7 @@ export interface SavedExpression {
   result: string;
 }
 
-interface CalculatorState {
+export interface CalculatorState {
   currentValue: string;
   previousValue: string;
   operation: string;

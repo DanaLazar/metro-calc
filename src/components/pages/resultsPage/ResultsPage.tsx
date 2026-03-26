@@ -1,16 +1,8 @@
-import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@danalazar/metro-ui";
-import type { AppDispatch, RootState } from "../../../store/store";
-import { clearHistory } from "../../../store/calculatorSlice";
+import { useResultsController } from "../../../hooks/useResultsController";
 
 const ResultsPage = () => {
-  const dispatch: AppDispatch = useDispatch();
-
-  const results = useSelector((state: RootState) => state.calculator.history);
-
-  const handleReset = () => {
-    dispatch(clearHistory());
-  };
+  const { results, actions } = useResultsController();
 
   return (
     <div className="w-full max-w-[540px] h-[calc(100vh-200px)] flex flex-col bg-[var(--color-white)] shadow-2xl overflow-hidden">
@@ -28,9 +20,9 @@ const ResultsPage = () => {
             Nu există rezultate salvate.
           </p>
         ) : (
-          results.map((item, index) => (
+          results.map((item) => (
             <div
-              key={index}
+              key={item.label}
               className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-4 bg-white/90 border border-[var(--color-border)] hover:border-[var(--color-primary-hover)] transition-colors"
             >
               <span className="text-sm font-medium text-[var(--color-text-secondary)] break-words">
@@ -49,7 +41,7 @@ const ResultsPage = () => {
         <Button
           variant="primary"
           size="md"
-          onClick={handleReset}
+          onClick={actions.onReset}
           className="w-full"
         >
           Resetează statistici

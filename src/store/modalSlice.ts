@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 type ModalType = "save" | "clear" | null;
 
-interface ModalState {
+export interface ModalState {
   type: ModalType;
   isOpen: boolean;
 }
