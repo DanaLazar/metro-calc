@@ -4,11 +4,11 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { describe, it, expect, vi } from "vitest";
 
-import ClearModalContent from "./ClearModalContent";
+import ClearModalContent from "@/components/pages/calculatorPage/components/ClearModalContent";
 import calculatorReducer, {
   clearCalculator,
-} from "../../../../store/calculatorSlice";
-import modalReducer, { closeModal } from "../../../../store/modalSlice";
+} from "@/store/calculatorSlice";
+import modalReducer, { closeModal } from "@/store/modalSlice";
 
 const createTestStore = () =>
   configureStore({

@@ -5,7 +5,7 @@ export function calculateExpression(
 ): string {
   const prevNum = parseFloat(prev);
   const currNum = parseFloat(current);
-  let result = 0;
+  let result: number | string = 0;
 
   switch (op) {
     case "+":
@@ -18,7 +18,7 @@ export function calculateExpression(
       result = prevNum * currNum;
       break;
     case "÷":
-      result = currNum !== 0 ? prevNum / currNum : 0;
+      result = currNum !== 0 ? prevNum / currNum : "not possible";
       break;
     default:
       result = currNum;

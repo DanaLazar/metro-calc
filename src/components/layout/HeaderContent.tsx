@@ -1,6 +1,6 @@
 import { Button } from "@danalazar/metro-ui";
 import { NavLink } from "react-router";
-import { MetroLogo } from "../../assets/metro-logo";
+import { MetroLogo } from "@/assets/metro-logo";
 
 const HeaderContent = () => {
   return (
@@ -25,6 +25,11 @@ const HeaderContent = () => {
               <Button variant={isActive ? "primary" : "ghost"}>
                 Rezultate
               </Button>
+            )}
+          </NavLink>
+          <NavLink to="/form">
+            {({ isActive }) => (
+              <Button variant={isActive ? "primary" : "ghost"}>Form</Button>
             )}
           </NavLink>
         </nav>

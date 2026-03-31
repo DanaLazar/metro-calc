@@ -13,12 +13,11 @@ Funcționalități:
 
 ## Instalare
 
-`
+```
 git clone https://github.com/DanaLazar/metro-calc.git
 cd metro-calc
 npm install
 npm run dev
-`
 
 ## Decizii arhitecturale
 - Separare clară UI vs business logic prin hook-uri (useCalculatorController, useResultsController)

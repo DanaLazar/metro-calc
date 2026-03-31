@@ -2,12 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import SaveModalContent from "./SaveModalContent";
+import SaveModalContent from "@/components/pages/calculatorPage/components/SaveModalContent";
 import calculatorReducer, {
   initialCalculatorState,
   saveExpression,
-} from "../../../../store/calculatorSlice";
-import modalReducer, { closeModal } from "../../../../store/modalSlice";
+} from "@/store/calculatorSlice";
+import modalReducer, { closeModal } from "@/store/modalSlice";
 import { describe, it, expect, vi } from "vitest";
 
 const createTestStore = () =>

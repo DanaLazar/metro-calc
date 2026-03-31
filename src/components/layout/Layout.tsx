@@ -1,5 +1,5 @@
-import HeaderContent from "./HeaderContent";
-import backgroundImage from "../../assets/background.jpg";
+import HeaderContent from "@/components/layout/HeaderContent";
+import backgroundImage from "@/assets/background.jpg";
 import { Outlet } from "react-router";
 
 function Layout() {

@@ -1,8 +1,8 @@
 import { Button } from "@danalazar/metro-ui";
 import { useDispatch } from "react-redux";
-import { clearCalculator } from "../../../../store/calculatorSlice";
-import { closeModal } from "../../../../store/modalSlice";
-import type { AppDispatch } from "../../../../store/store";
+import { clearCalculator } from "@/store/calculatorSlice";
+import { closeModal } from "@/store/modalSlice";
+import type { AppDispatch } from "@/store/store";
 
 const ClearModalContent = () => {
   const dispatch: AppDispatch = useDispatch();

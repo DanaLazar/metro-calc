@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Input } from "@danalazar/metro-ui";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../../../store/modalSlice";
-import { saveExpression } from "../../../../store/calculatorSlice";
-import type { AppDispatch, RootState } from "../../../../store/store";
+import { closeModal } from "@/store/modalSlice";
+import { saveExpression } from "@/store/calculatorSlice";
+import type { AppDispatch, RootState } from "@/store/store";
 
 const SaveModalContent = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -32,7 +32,9 @@ const SaveModalContent = () => {
       <Input
         id="save-modal-input"
         value={label}
-        onChange={setLabel}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setLabel(e.target.value)
+        }
         placeholder="Introduceți o etichetă..."
       />
 

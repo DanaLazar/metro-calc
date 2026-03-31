@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { useCalculatorController } from "./useCalculatorController";
+import { useCalculatorController } from "@/hooks/useCalculatorController";
 import * as reactRedux from "react-redux";
 import {
   inputNumber,
@@ -9,9 +9,9 @@ import {
   inputDecimal,
   backspace,
   initialCalculatorState,
-} from "../store/calculatorSlice";
-import { openModal } from "../store/modalSlice";
-import { RootState } from "../store/store";
+} from "@/store/calculatorSlice";
+import { openModal } from "@/store/modalSlice";
+import { RootState } from "@/store/store";
 
 describe("useCalculatorController", () => {
   const mockDispatch = vi.fn();

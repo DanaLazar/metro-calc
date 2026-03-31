@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState, AppDispatch } from "../store/store";
-import { clearHistory } from "../store/calculatorSlice";
+import type { RootState, AppDispatch } from "@/store/store";
+import { clearHistory } from "@/store/calculatorSlice";
 
 export const useResultsController = () => {
   const dispatch: AppDispatch = useDispatch();

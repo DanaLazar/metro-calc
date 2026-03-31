@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculateExpression } from "./calculateExpression";
+import { calculateExpression } from "@/utils/calculateExpression";
 
 describe("calculateExpression", () => {
   it("adds numbers correctly", () => {
@@ -19,7 +19,7 @@ describe("calculateExpression", () => {
   });
 
   it("handles division by zero", () => {
-    expect(calculateExpression("6", "÷", "0")).toBe("0");
+    expect(calculateExpression("6", "÷", "0")).toBe("not possible");
   });
 
   it("returns current number for unknown operation", () => {

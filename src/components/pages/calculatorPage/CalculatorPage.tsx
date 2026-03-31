@@ -1,5 +1,5 @@
-import Calculator from "./components/Calculator";
-import { ModalContainer } from "../../common/ModalContainer";
+import Calculator from "@/components/pages/calculatorPage/components/Calculator";
+import { ModalContainer } from "@/components/common/ModalContainer";
 
 const CalculatorPage = () => {
   return (

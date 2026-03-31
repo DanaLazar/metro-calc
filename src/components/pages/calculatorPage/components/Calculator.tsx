@@ -1,5 +1,5 @@
 import { Button, Keypad } from "@danalazar/metro-ui";
-import { useCalculatorController } from "../../../../hooks/useCalculatorController";
+import { useCalculatorController } from "@/hooks/useCalculatorController";
 
 const Calculator = () => {
   const {

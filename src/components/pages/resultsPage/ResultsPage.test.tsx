@@ -4,12 +4,12 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { describe, it, expect, vi } from "vitest";
 
-import ResultsPage from "./ResultsPage";
+import ResultsPage from "@/components/pages/resultsPage/ResultsPage";
 import calculatorReducer, {
   clearHistory,
   initialCalculatorState,
-} from "../../../store/calculatorSlice";
-import type { SavedExpression } from "../../../store/calculatorSlice";
+} from "@/store/calculatorSlice";
+import type { SavedExpression } from "@/store/calculatorSlice";
 
 const createTestStore = (history: SavedExpression[] = []) =>
   configureStore({

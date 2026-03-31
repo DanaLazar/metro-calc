@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { calculateExpression } from "../utils/calculateExpression";
+import { calculateExpression } from "@/utils/calculateExpression";
 
 export interface SavedExpression {
   label: string;
@@ -27,6 +27,10 @@ export const initialCalculatorState: CalculatorState = {
   history: [],
 };
 
+const formatResult = (value: number): string => {
+  return Number.isInteger(value) ? value.toString() : value.toFixed(2);
+};
+
 const calculatorSlice = createSlice({
   name: "calculator",
   initialState: initialCalculatorState,
@@ -46,21 +50,42 @@ const calculatorSlice = createSlice({
     },
 
     inputDecimal: (state) => {
+      if (state.isCalculated) {
+        state.currentValue = "0.";
+        state.isCalculated = false;
+        return;
+      }
+
       if (!state.currentValue.includes(".")) {
         state.currentValue += ".";
       }
     },
 
     chooseOperation: (state, action: PayloadAction<string>) => {
+      // operator override (ex: 5 + - ×)
+      if (state.currentValue === "0" && state.previousValue) {
+        state.operation = action.payload;
+        return;
+      }
+
       if (!state.currentValue) return;
 
-      if (state.previousValue) {
+      if (state.previousValue && state.operation) {
         const result = calculateExpression(
           state.previousValue,
           state.operation,
           state.currentValue,
         );
-        state.previousValue = result;
+
+        if (isNaN(Number(result))) {
+          state.currentValue = result;
+          state.previousValue = "";
+          state.operation = "";
+          state.isCalculated = true;
+          return;
+        }
+
+        state.previousValue = formatResult(Number(result));
       } else {
         state.previousValue = state.currentValue;
       }
@@ -73,24 +98,40 @@ const calculatorSlice = createSlice({
     calculate: (state) => {
       if (!state.previousValue || !state.operation) return;
 
+      const expression = `${state.previousValue} ${state.operation} ${state.currentValue}`;
+
       const result = calculateExpression(
         state.previousValue,
         state.operation,
         state.currentValue,
       );
 
-      const numericResult = parseFloat(result).toFixed(2);
+      // handle invalid result (ex: division by zero)
+      if (isNaN(Number(result))) {
+        state.result = result;
+        state.currentValue = result;
+        state.expression = expression;
+      } else {
+        const numeric = Number(result);
+        const formatted = formatResult(numeric);
 
-      state.expression = `${state.previousValue} ${state.operation} ${state.currentValue}`;
+        state.result = formatted;
+        state.currentValue = formatted;
+        state.expression = expression;
+      }
 
-      state.result = numericResult;
-      state.currentValue = numericResult;
       state.previousValue = "";
       state.operation = "";
       state.isCalculated = true;
     },
 
     backspace: (state) => {
+      if (state.isCalculated) {
+        state.currentValue = "0";
+        state.isCalculated = false;
+        return;
+      }
+
       if (state.currentValue.length <= 1) {
         state.currentValue = "0";
       } else {
@@ -103,6 +144,7 @@ const calculatorSlice = createSlice({
       state.previousValue = "";
       state.operation = "";
       state.result = "";
+      state.expression = "";
       state.isCalculated = false;
     },
 
@@ -111,11 +153,11 @@ const calculatorSlice = createSlice({
     },
 
     saveExpression: (state, action: PayloadAction<{ label: string }>) => {
-      if (!state.result) return;
+      if (!state.result || !state.expression) return;
 
       state.history.push({
         label: action.payload.label,
-        result: state.result,
+        result: `${state.expression} = ${state.result}`,
       });
     },
   },

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "../../../../store/store";
-import Calculator from "./Calculator";
+import { store } from "@/store/store";
+import Calculator from "@/components/pages/calculatorPage/components/Calculator";
 import { expect, it } from "vitest";
 
 const renderWithStore = (ui: React.ReactElement) => {
