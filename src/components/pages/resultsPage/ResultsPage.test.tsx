@@ -41,8 +41,8 @@ describe("ResultsPage", () => {
 
   it("renders list of results", () => {
     const mockHistory: SavedExpression[] = [
-      { label: "Adunare", result: "4" },
-      { label: "Înmulțire", result: "9" },
+      { label: "Testing1", result: "4" },
+      { label: "Testing2", result: "9" },
     ];
 
     const store = createTestStore(mockHistory);
@@ -53,10 +53,10 @@ describe("ResultsPage", () => {
       </Provider>,
     );
 
-    expect(screen.getByText("Adunare")).toBeInTheDocument();
+    expect(screen.getByText("Testing1")).toBeInTheDocument();
     expect(screen.getByText("4")).toBeInTheDocument();
 
-    expect(screen.getByText("Înmulțire")).toBeInTheDocument();
+    expect(screen.getByText("Testing2")).toBeInTheDocument();
     expect(screen.getByText("9")).toBeInTheDocument();
   });
 
