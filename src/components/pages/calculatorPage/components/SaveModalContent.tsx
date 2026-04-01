@@ -46,7 +46,12 @@ const SaveModalContent = () => {
         >
           Anulează
         </Button>
-        <Button variant="primary" onClick={handleSave} className="flex-1">
+        <Button
+          disabled={!label.trim()}
+          variant="primary"
+          onClick={handleSave}
+          className="flex-1"
+        >
           Salvează
         </Button>
       </div>
