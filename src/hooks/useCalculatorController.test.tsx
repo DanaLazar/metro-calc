@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useCalculatorController } from "@/hooks/useCalculatorController";
-import * as reactRedux from "react-redux";
 import {
   inputNumber,
   chooseOperation,
@@ -11,23 +10,35 @@ import {
   initialCalculatorState,
 } from "@/store/calculatorSlice";
 import { openModal } from "@/store/modalSlice";
-import { RootState } from "@/store/store";
+import type { RootState } from "@/store/store";
+
+vi.mock("react-redux", () => ({
+  useDispatch: vi.fn(),
+  useSelector: vi.fn(),
+}));
+
+import { useDispatch, useSelector } from "react-redux";
 
 describe("useCalculatorController", () => {
   const mockDispatch = vi.fn();
-  const mockState = {
+
+  const mockState: RootState = {
     calculator: initialCalculatorState,
     modal: {
       isOpen: false,
       type: null,
     },
-  };
+  } as RootState;
+
+  const mockedUseDispatch = useDispatch as unknown as ReturnType<typeof vi.fn>;
+  const mockedUseSelector = useSelector as unknown as ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     mockDispatch.mockClear();
 
-    vi.spyOn(reactRedux, "useDispatch").mockReturnValue(mockDispatch);
-    vi.spyOn(reactRedux, "useSelector").mockImplementation(
+    mockedUseDispatch.mockReturnValue(mockDispatch);
+
+    mockedUseSelector.mockImplementation(
       (selector: (state: RootState) => unknown) => selector(mockState),
     );
   });
